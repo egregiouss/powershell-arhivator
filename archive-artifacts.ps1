@@ -14,7 +14,9 @@ param(
     [string]$SourceDir = "./dev_build",
     [string]$OutputDir = "./artifacts"
 )
-$z
+$7zip = if ($IsWindows) { $env:TEMP } else { "/tmp" }
+$tempBase = if ($IsWindows) { $env:TEMP } else { "/tmp" }
+
 
 function AddCheckSumsToArchive {
     param (

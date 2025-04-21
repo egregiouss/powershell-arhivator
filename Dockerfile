@@ -8,4 +8,4 @@ RUN apt-get update && \
 WORKDIR /workspace
 COPY . .
 
-CMD ["pwsh", "-Command", "Invoke-Pester ./archivate_script.Tests.ps1 -Output Detailed"]
+CMD ["pwsh", "-Command", "Invoke-Pester ./archive-artifacts.Tests.ps1 -Output Detailed"]

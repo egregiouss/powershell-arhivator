@@ -1,4 +1,5 @@
-BeforeAll {    
+BeforeAll { 
+    $scriptToTest = "./archive-artifacts.ps1"
     $testRoot = Join-Path -Path $TestDrive -ChildPath "dev_build"
     $outputDir = Join-Path -Path $TestDrive -ChildPath "artifacts"
     
@@ -19,7 +20,7 @@ BeforeAll {
     New-Item -ItemType Directory -Path $subDir -Force | Out-Null
     "sub content" | Out-File -FilePath (Join-Path -Path $subDir -ChildPath "file3.txt") -Encoding utf8
     
-    .\archivate_script.ps1 -SourceDir $testRoot -OutputDir $outputDir
+    & $scriptToTest -SourceDir $testRoot -OutputDir $outputDir
 }
 
 Describe "Artifact Archivator Tests" {
@@ -91,6 +92,6 @@ Describe "Artifact Archivator Tests" {
         $emptyDir = Join-Path -Path $TestDrive -ChildPath "empty"
         New-Item -ItemType Directory -Path $emptyDir -Force | Out-Null
         
-        { .\archivate_script.ps1 -SourceDir $emptyDir -OutputDir $outputDir } | Should -Not -Throw
+        {& $scriptToTest -SourceDir $emptyDir -OutputDir $outputDir}  | Should -Not -Throw
     }
 }

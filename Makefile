@@ -1,4 +1,4 @@
-SOURCE_DIR ?= ./dev_build
+SOURCE_DIR ?= ../dev_build
 OUTPUT_DIR ?= ./artifacts
 
 build:

@@ -14,7 +14,7 @@ param(
     [string]$SourceDir = "./dev_build",
     [string]$OutputDir = "./artifacts"
 )
-$7zip = if ($IsWindows) { $env:TEMP } else { "/tmp" }
+$7zip = if ($IsWindows) { "C:\Program Files\7-Zip\7z.exe" } else { "7z" }
 $tempBase = if ($IsWindows) { $env:TEMP } else { "/tmp" }
 
 
@@ -34,10 +34,10 @@ function AddCheckSumsToArchive {
         "$((Get-FileHash -Path $_.FullName -Algorithm SHA256).Hash)  ${relativePath}" | Out-File -FilePath $sha256File -Append -Encoding utf8
     }
     
-    & 7z u $archivePath $md5File $sha1File $sha256File | Out-Null
+    & $7zip u $archivePath $md5File $sha1File $sha256File | Out-Null
 }
 function CheckRequirements {
-    if (-not (Get-Command 7z -ErrorAction SilentlyContinue)) {
+    if (-not (Get-Command 7zip -ErrorAction SilentlyContinue)) {
         Write-Error "7z is required but not found. Please install it first."
         exit 1
     }
@@ -73,7 +73,7 @@ function CreateArchive {
         [string]$archivePath,
         [System.Object]$project
     )
-    & 7z a -t7z -mx9 $archivePath "$($project.FullName)/*" | Out-Null
+    & $7zip as a -t7z -mx9 $archivePath "$($project.FullName)/*" | Out-Null
     if ($LASTEXITCODE -ne 0) {
         Write-Error "Failed to create archive for $($project.Name)"
         continue

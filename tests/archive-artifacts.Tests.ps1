@@ -1,5 +1,5 @@
 BeforeAll { 
-    $scriptToTest = "./archive-artifacts.ps1"
+    $scriptToTest = "./src/archive-artifacts.ps1"
     $testRoot = Join-Path -Path $TestDrive -ChildPath "dev_build"
     $outputDir = Join-Path -Path $TestDrive -ChildPath "artifacts"
     

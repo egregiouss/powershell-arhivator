@@ -1,4 +1,6 @@
 BeforeAll { 
+    $7zip = if ($IsWindows) { "C:\Program Files\7-Zip\7z.exe" } else { "7z" }
+
     $scriptToTest = "./src/archive-artifacts.ps1"
     $testRoot = Join-Path -Path $TestDrive -ChildPath "dev_build"
     $outputDir = Join-Path -Path $TestDrive -ChildPath "artifacts"
@@ -38,7 +40,7 @@ Describe "Artifact Archivator Tests" {
             New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
             
             $archive1 = Join-Path -Path $outputDir -ChildPath "project1_artifacts" -AdditionalChildPath "project1_artifacts.7z"
-            & 7z x -o"$tempDir" $archive1 | Out-Null
+            & $7zip x -o"$tempDir" $archive1 | Out-Null
             
             $script:md5sums = Get-Content -Path (Join-Path -Path $tempDir -ChildPath "md5sums.txt")
             $script:sha1sums = Get-Content -Path (Join-Path -Path $tempDir -ChildPath "sha1sums.txt")
